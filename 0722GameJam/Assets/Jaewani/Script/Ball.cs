@@ -9,6 +9,7 @@ public struct BallStat
 
     public float ballDamage;
     public float ballSpeed;
+    public int maxBallReflectCount;
     public int ballReflectCount;
 }
 
@@ -78,6 +79,7 @@ public class Ball : MonoBehaviour
     {
         if (ballStat.ballReflectCount < 0)
         {
+            levelupVelocity = RB.velocity;
             GameManager.RoundEnd();
         }
     }
@@ -94,6 +96,7 @@ public class Ball : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("DownWall"))
         {
+            levelupVelocity = RB.velocity;
             GameManager.RoundEnd();
         }
         else if (collision.gameObject.CompareTag("Wall")) 

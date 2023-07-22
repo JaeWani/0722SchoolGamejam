@@ -15,7 +15,6 @@ public class PassiveBoard : PassiveSkill
 
     void Update()
     {
-        board.transform.localScale = new Vector2(AutoBoardSize, board.transform.localScale.y);
     }
     protected override void SkillAbility()
     {

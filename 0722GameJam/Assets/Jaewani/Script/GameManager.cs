@@ -43,11 +43,14 @@ public class GameManager : MonoBehaviour
     private void _RoundStart()
     {
         Round++;
-        Time.timeScale = 1;
+        UIManager.instance.StopAllCoroutines();
         if (Round % 5 == 0)
             _CreateBoss();
         else
             _CreatBlock();
+
+        Ball.transform.position = new Vector2(0,0);
+        UIManager.FadeIn();
     }
     private void _CreateBoss()
     {
@@ -70,9 +73,18 @@ public class GameManager : MonoBehaviour
     }
     private void _RoundEnd()
     {
-        DestroyAllBlock();
-        Time.timeScale = 0;
-        RoundStart();
+        Ball.transform.position = new Vector2(0,0);
+        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+        StartCoroutine(_RoundEnd());
+        IEnumerator _RoundEnd()
+        {
+            yield return StartCoroutine(UIManager.instance._FadeOut());
+            DestroyAllBlock();
+            yield return new WaitForSecondsRealtime(2);
+            RoundStart();
+        }
+
+        
         if (startDelegate != null)
             startDelegate();
     }
@@ -83,6 +95,7 @@ public class GameManager : MonoBehaviour
             if (Blocks.transform.childCount <= 0)
             {
                 RoundEnd();
+                isRound = true;
             }
 
         }
