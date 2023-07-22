@@ -5,20 +5,13 @@ using UnityEngine;
 public class PassiveExplosion : PassiveSkill
 {
     [SerializeField] private GameObject ExplosionRange;
+    public float ExplosionDamage = 0.3f;
     
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
     protected override void SkillAbility()
     {
         base.SkillAbility();
         Debug.Log("Æø¹ß");
-        Instantiate(ExplosionRange,transform.position,Quaternion.identity);
+        var explosion = Instantiate(ExplosionRange,transform.position,Quaternion.identity).GetComponent<Explosion>();
+        explosion.ExplosionDmg = ExplosionDamage;
     }
 }

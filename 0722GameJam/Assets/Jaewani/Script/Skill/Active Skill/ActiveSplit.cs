@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActiveSplit : ActiveSkill
 {
     public GameObject BallObject;
+    public int BallCount = 5;
     void Start()
     {
     }
@@ -16,7 +17,7 @@ public class ActiveSplit : ActiveSkill
     protected override void SkillAblity()
     {
         base.SkillAblity();
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < BallCount; i++) 
         {
             var obj =  Instantiate(BallObject,transform.position, Quaternion.identity);
             var rb = obj.GetComponent<Rigidbody2D>();

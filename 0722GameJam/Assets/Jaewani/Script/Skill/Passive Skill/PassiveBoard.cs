@@ -6,6 +6,8 @@ public class PassiveBoard : PassiveSkill
 {
     public GameObject autoBoard;
     public bool IsSpawnBoard = false;
+    public float AutoBoardSize;
+    AutoBoard board;
     void Start()
     {
         
@@ -13,14 +15,14 @@ public class PassiveBoard : PassiveSkill
 
     void Update()
     {
-        
+        board.transform.localScale = new Vector2(AutoBoardSize, board.transform.localScale.y);
     }
     protected override void SkillAbility()
     {
         base.SkillAbility();
         if (IsSpawnBoard == false) 
         {
-            Instantiate(autoBoard,new Vector2(0,-3.5f),Quaternion.identity);
+            board = Instantiate(autoBoard,new Vector2(0,-3.5f),Quaternion.identity).GetComponent<AutoBoard>();
             IsSpawnBoard = true;
         }
     }

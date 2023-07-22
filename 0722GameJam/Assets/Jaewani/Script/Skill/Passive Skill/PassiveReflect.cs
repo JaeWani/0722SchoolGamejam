@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PassiveReflect : PassiveSkill
 {
-
+    public int PluseReflect = 5;
     void Start()
     {
         
@@ -17,6 +17,6 @@ public class PassiveReflect : PassiveSkill
     protected override void SkillAbility()
     {
         base.SkillAbility();
-        GameManager.instance.Ball.GetComponent<Ball>().ballStat.ballReflectCount += 5;
+        GameManager.instance.Ball.GetComponent<Ball>().ballStat.ballReflectCount += PluseReflect;
     }
 }

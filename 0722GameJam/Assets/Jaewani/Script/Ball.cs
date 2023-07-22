@@ -19,6 +19,10 @@ public class Ball : MonoBehaviour
 
     public BallStat ballStat = new BallStat();
 
+    public int ballLevel = 1;
+    public int currentExp;
+    public List<int> needExp = new List<int>();
+
     private Rigidbody2D RB;
 
     void Start()
@@ -28,6 +32,24 @@ public class Ball : MonoBehaviour
         GameManager.instance.startDelegate = new GameManager.RoundStartDelegate(passiveSkills[3].Passive);
 
         activeSkills[0].wait = new WaitForSecondsRealtime(activeSkills[0].Delay);
+
+        SetNeedExp();
+    }
+    void SetNeedExp()
+    {
+        for (int i = 0; i < 1000; i++) 
+        {
+            int need = (i + (1000 * i / 2));
+            needExp.Add(need);
+        }
+    }
+    private void LevelCheck()
+    {
+        if (currentExp >= needExp[ballLevel]) 
+        {
+            ballLevel++;
+            currentExp = 0;
+        }
     }
 
     void Update()
@@ -39,6 +61,8 @@ public class Ball : MonoBehaviour
         activeSkills[1].Active();
         activeSkills[2].Active();
         activeSkills[3].Active();
+
+        LevelCheck();
     }
     private void BoardReflect(GameObject board)
     {
@@ -46,6 +70,7 @@ public class Ball : MonoBehaviour
         ballStat.ballReflectCount--;
         CheckReflectCount();
     }
+    
     private void CheckReflectCount()
     {
         if (ballStat.ballReflectCount < 0)

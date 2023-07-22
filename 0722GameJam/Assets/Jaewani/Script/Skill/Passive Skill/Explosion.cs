@@ -6,6 +6,7 @@ public class Explosion : MonoBehaviour
 {
     public GameObject ExplosionParticle;
     public bool CanExplosion = true;
+    public float ExplosionDmg = 0.3f;
     void Start()
     {
 
@@ -32,7 +33,7 @@ public class Explosion : MonoBehaviour
             for (int i = 0; i < hitColliders.Length; i++)
             {
                 if (hitColliders[i].TryGetComponent(out Block block))
-                    block.blockStat.blockHp -= (GameManager.instance.Ball.GetComponent<Ball>().ballStat.ballDamage / 10);
+                    block.blockStat.blockHp -= (GameManager.instance.Ball.GetComponent<Ball>().ballStat.ballDamage * ExplosionDmg);
             }
             StopAllCoroutines();
             StartCoroutine(ExplosionDelay());

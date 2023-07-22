@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallSkill : MonoBehaviour
 {
     public bool IsSkill;
+    public int Lv;
     void Start()
     {
         

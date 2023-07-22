@@ -7,6 +7,8 @@ public struct BlockStat
 {
     public float blockHp;
     public float blockMaxHp;
+
+    public int giveExp;
 }
 
 public class Block : MonoBehaviour
@@ -14,6 +16,7 @@ public class Block : MonoBehaviour
     public BlockStat blockStat = new BlockStat();
     void Start()
     {
+        blockStat.blockMaxHp = 100 + GameManager.instance.Ball.GetComponent<Ball>().ballLevel * 200;
         blockStat.blockHp = blockStat.blockMaxHp;
     }
 
@@ -45,7 +48,9 @@ public class Block : MonoBehaviour
     {
         if (blockStat.blockHp <= 0)
         {
+            
             Destroy(gameObject);
+            GameManager.CheckRoundEnd();
         }
     }
 }

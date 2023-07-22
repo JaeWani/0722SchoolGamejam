@@ -5,6 +5,7 @@ using UnityEngine;
 public class AutoBoard : MonoBehaviour
 {
     public float Speed;
+    public float boardSize;
     void Start()
     {
     }
@@ -13,6 +14,7 @@ public class AutoBoard : MonoBehaviour
     {
         transform.Translate(new Vector2(Speed * Time.deltaTime,0));
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))

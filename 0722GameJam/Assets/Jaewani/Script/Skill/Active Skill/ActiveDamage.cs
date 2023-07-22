@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActiveDamage : ActiveSkill
 {
     public float Duration;
+    public float PlusDamage;
     WaitForSeconds duration;
     void Start()
     {
@@ -22,7 +23,7 @@ public class ActiveDamage : ActiveSkill
         IEnumerator SkillAblity()
         {
             var ball = GameManager.instance.Ball.GetComponent<Ball>();
-            float plusDmg = ball.ballStat.ballDamage * 2;
+            float plusDmg = ball.ballStat.ballDamage * PlusDamage;
             ball.ballStat.ballDamage += plusDmg;
             yield return duration;
             ball.ballStat.ballDamage -= plusDmg;

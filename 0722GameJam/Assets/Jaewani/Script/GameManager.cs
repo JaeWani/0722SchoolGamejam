@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int BlockLineCount = 5;
     public List<GameObject> BlockPrefabs = new List<GameObject>();
 
+    public bool isRound;
 
     public GameObject Ball;
     public GameObject Board;
@@ -33,10 +34,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        CheckRoundEnd();
     }
     public static void RoundStart() => instance._RoundStart();
     public static void RoundEnd() => instance._RoundEnd();
+    public static void CheckRoundEnd() => instance._CheckRoundEnd();
 
     private void _RoundStart()
     {
@@ -46,7 +48,6 @@ public class GameManager : MonoBehaviour
             _CreateBoss();
         else
             _CreatBlock();
-
     }
     private void _CreateBoss()
     {
@@ -72,8 +73,19 @@ public class GameManager : MonoBehaviour
         DestroyAllBlock();
         Time.timeScale = 0;
         RoundStart();
-        if(startDelegate != null)
-        startDelegate();
+        if (startDelegate != null)
+            startDelegate();
+    }
+    private void _CheckRoundEnd()
+    {
+        if (isRound == false)
+        {
+            if (Blocks.transform.childCount <= 0)
+            {
+                RoundEnd();
+            }
+
+        }
     }
     void DestroyAllBlock()
     {
