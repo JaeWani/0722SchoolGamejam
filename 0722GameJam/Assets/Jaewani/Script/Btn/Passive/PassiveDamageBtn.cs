@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class PassiveDamageBtn : PassiveBtn
 {
-    private void Start()
-    {
-        Description = "데미지를 30% 증가시킵니다. \n ( 2번째 선택부터 +10% )";
-    }
-    protected override void BtnClick()
+    
+    public override void BtnClick()
     {
         base.BtnClick();
         var ball = GameManager.instance.Ball.GetComponent<Ball>();

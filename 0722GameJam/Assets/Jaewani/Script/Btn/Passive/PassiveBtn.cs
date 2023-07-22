@@ -5,16 +5,12 @@ using UnityEngine.UI;
 
 public class PassiveBtn : MonoBehaviour
 {
-    Button btn;
 
+    public string Name;
     public string Description;
+    public Sprite icon;
 
-    void Start()
-    {
-        btn = GetComponent<Button>();
-        btn.onClick.AddListener(()=> BtnClick());
-    }
-    protected virtual void BtnClick() 
+    public virtual void BtnClick() 
     { 
         
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PassiveReflectBtn : PassiveBtn
 {
-    protected override void BtnClick()
+    public override void BtnClick()
     {
         base.BtnClick();
         var ball = GameManager.instance.Ball.GetComponent<Ball>();

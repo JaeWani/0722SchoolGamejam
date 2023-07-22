@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class StatBtn : MonoBehaviour
 {
-    Button btn;
+
+    public Sprite icon;
+
+    public string Name;
     public string Description;
-    void Start()
-    {
-        btn = GetComponent<Button>();
-        btn.onClick.AddListener(() => BtnClick());
-    }
-    protected virtual void BtnClick()
+ 
+    public virtual void BtnClick()
     {
 
     }

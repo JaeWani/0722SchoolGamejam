@@ -20,8 +20,8 @@ public class Ball : MonoBehaviour
     public BallStat ballStat = new BallStat();
 
     public int ballLevel = 1;
-    public int currentExp;
-    public List<int> needExp = new List<int>();
+    public float currentExp;
+    public List<float> needExp = new List<float>();
 
     private Rigidbody2D RB;
 
@@ -39,16 +39,19 @@ public class Ball : MonoBehaviour
     {
         for (int i = 0; i < 1000; i++) 
         {
-            int need = (i + (1000 * i / 2));
+            int need = ((1000 * i / 2));
             needExp.Add(need);
         }
     }
+    public Vector2 levelupVelocity;
     private void LevelCheck()
     {
         if (currentExp >= needExp[ballLevel]) 
         {
             ballLevel++;
             currentExp = 0;
+            levelupVelocity = RB.velocity;
+            SelectManager.StartSelect();
         }
     }
 

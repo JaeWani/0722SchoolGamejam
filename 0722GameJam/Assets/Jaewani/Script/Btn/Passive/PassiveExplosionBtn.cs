@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PassiveExplosionBtn : PassiveBtn
 {
     
-    protected override void BtnClick()
+    public override void BtnClick()
     {
         base.BtnClick();
         var ball = GameManager.instance.Ball.GetComponent<Ball>();

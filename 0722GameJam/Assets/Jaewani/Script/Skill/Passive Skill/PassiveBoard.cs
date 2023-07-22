@@ -22,7 +22,7 @@ public class PassiveBoard : PassiveSkill
         base.SkillAbility();
         if (IsSpawnBoard == false) 
         {
-            board = Instantiate(autoBoard,new Vector2(0,-3.5f),Quaternion.identity).GetComponent<AutoBoard>();
+            board = Instantiate(autoBoard,new Vector2(0,-2.5f),Quaternion.identity).GetComponent<AutoBoard>();
             IsSpawnBoard = true;
         }
     }
