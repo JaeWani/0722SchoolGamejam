@@ -28,6 +28,6 @@ public class gamescenes : MonoBehaviour
     IEnumerator DelayedSceneLoad()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene_3");
     }
 }
