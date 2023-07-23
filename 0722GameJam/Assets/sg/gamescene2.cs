@@ -14,7 +14,7 @@ public class gamescenes2 : MonoBehaviour
     IEnumerator DelayedSceneLoad()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("main");
+        SceneManager.LoadScene(0);
     }
 
     private void Start()
