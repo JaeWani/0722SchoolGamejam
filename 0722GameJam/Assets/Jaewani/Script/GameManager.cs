@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public FadeScript FadeScript;
     public delegate void RoundStartDelegate();
     public RoundStartDelegate startDelegate;
 
@@ -15,7 +16,11 @@ public class GameManager : MonoBehaviour
     public int BlockLineCount = 5;
     public List<GameObject> BlockPrefabs = new List<GameObject>();
 
+    public GameObject BossPrefab;
+
     public bool isRound;
+
+    public bool isBoss;
 
     public GameObject Ball;
     public GameObject Board;
@@ -42,19 +47,36 @@ public class GameManager : MonoBehaviour
 
     private void _RoundStart()
     {
+        UIManager.FadeIn();
         Round++;
-        UIManager.instance.StopAllCoroutines();
+        isRound = true;
         if (Round % 5 == 0)
+        {
+            isBoss = true;
             _CreateBoss();
+        }
         else
             _CreatBlock();
 
         Ball.transform.position = new Vector2(0,0);
-        UIManager.FadeIn();
+        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+        Ball.GetComponent<Ball>().ballStat.ballReflectCount = Ball.GetComponent<Ball>().ballStat.maxBallReflectCount;
+
+        StartCoroutine(_RoundStart());
+        IEnumerator _RoundStart()
+        {
+            yield return StartCoroutine(UIManager.instance.CountDown());
+            Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0,-10);
+        }
     }
     private void _CreateBoss()
     {
-        Debug.Log("¿¿æ÷æ≤");
+        var bossBlock =  Instantiate(BossPrefab, Blocks.transform).GetComponent<Block>();
+        bossBlock.blockStat.blockMaxHp = Ball.GetComponent<Ball>().ballLevel * 100000;
+        bossBlock.blockStat.blockHp = bossBlock.blockStat.blockMaxHp;
+        bossBlock.blockStat.giveExp = 5000 * Ball.GetComponent<Ball>().ballLevel;
+
     }
     private void _CreatBlock()
     {
@@ -73,15 +95,20 @@ public class GameManager : MonoBehaviour
     }
     private void _RoundEnd()
     {
-        Ball.transform.position = new Vector2(0,0);
-        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-        StartCoroutine(_RoundEnd());
-        IEnumerator _RoundEnd()
+        isBoss = false;
+        if (isRound == true) 
         {
-            yield return StartCoroutine(UIManager.instance._FadeOut());
-            DestroyAllBlock();
-            yield return new WaitForSecondsRealtime(2);
-            RoundStart();
+            Ball.transform.position = new Vector2(0, 0);
+            Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            StartCoroutine(_RoundEnd());
+            IEnumerator _RoundEnd()
+            {
+                yield return StartCoroutine(UIManager.instance._FadeOut());
+                DestroyAllBlock();
+                yield return new WaitForSecondsRealtime(2);
+                RoundStart();
+            }
+            isRound = false;
         }
 
         
@@ -90,12 +117,12 @@ public class GameManager : MonoBehaviour
     }
     private void _CheckRoundEnd()
     {
-        if (isRound == false)
+        if (isRound == true)
         {
             if (Blocks.transform.childCount <= 0)
             {
                 RoundEnd();
-                isRound = true;
+                isRound = false;
             }
 
         }

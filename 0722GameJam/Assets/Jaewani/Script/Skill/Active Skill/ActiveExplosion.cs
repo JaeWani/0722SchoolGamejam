@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActiveExplosion : ActiveSkill
 {
+    public AudioSource AudioSource;
     public GameObject Explosion;
     public float ExplosionDamage;
     void Start()
@@ -17,6 +18,7 @@ public class ActiveExplosion : ActiveSkill
     }
     protected override void SkillAblity()
     {
+        AudioSource.Play();
         base.SkillAblity();
         var skill = Instantiate(Explosion, transform.position, Quaternion.identity).GetComponent<SkillExplosion>();
         skill.ExplosionDmg = ExplosionDamage;

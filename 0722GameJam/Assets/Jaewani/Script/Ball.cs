@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
 {
     public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
     public List<ActiveSkill> activeSkills = new List<ActiveSkill>();
-
+    public AudioSource[] audioSources;// 0: block, 1: board
     public BallStat ballStat = new BallStat();
 
     public int ballLevel = 1;
@@ -38,7 +38,7 @@ public class Ball : MonoBehaviour
     }
     void SetNeedExp()
     {
-        for (int i = 0; i < 1000; i++) 
+        for (int i = 0; i < 1000; i++)
         {
             int need = ((1000 * i / 2));
             needExp.Add(need);
@@ -47,7 +47,7 @@ public class Ball : MonoBehaviour
     public Vector2 levelupVelocity;
     private void LevelCheck()
     {
-        if (currentExp >= needExp[ballLevel]) 
+        if (currentExp >= needExp[ballLevel])
         {
             ballLevel++;
             currentExp = 0;
@@ -74,11 +74,13 @@ public class Ball : MonoBehaviour
         ballStat.ballReflectCount--;
         CheckReflectCount();
     }
-    
+
     private void CheckReflectCount()
     {
         if (ballStat.ballReflectCount < 0)
         {
+            if (GameManager.instance.isBoss == true) { UIManager.instance.GameOver(); }
+
             levelupVelocity = RB.velocity;
             GameManager.RoundEnd();
         }
@@ -87,21 +89,24 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Block"))
         {
+            audioSources[0].Play();
             passiveSkills[0].Passive();
         }
         else if (collision.gameObject.CompareTag("Board"))
         {
-
+            // audioSources[1].Play();
             BoardReflect(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("DownWall"))
         {
+            if (GameManager.instance.isBoss == true) { UIManager.instance.GameOver(); }
+           
             levelupVelocity = RB.velocity;
             GameManager.RoundEnd();
         }
-        else if (collision.gameObject.CompareTag("Wall")) 
-        { 
-        
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+
         }
     }
 }

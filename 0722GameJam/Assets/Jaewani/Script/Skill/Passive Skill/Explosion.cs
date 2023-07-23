@@ -9,7 +9,7 @@ public class Explosion : MonoBehaviour
     public float ExplosionDmg = 0.3f;
     void Start()
     {
-
+        Destroy(gameObject,0.2f);
     }
 
     void Update()
